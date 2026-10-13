@@ -364,7 +364,6 @@ button { font: inherit; }
 .ugc-photo-fallback img { display:block; width:100%; height:auto; max-width:100%; }
 .ugc-scroll-tools { display:none; }
 .ugc-scroll-tools[hidden] { display:none; }
-.ugc-scroll-hint { margin:0; font-size:11px; color:var(--muted); }
 .ugc-scroll-buttons { display:flex; gap:8px; }
 .ugc-scroll-button, .collection-scroll-button {
   width:44px;
@@ -413,7 +412,7 @@ button { font: inherit; }
 .js .reveal.visible { opacity:1; transform:none; }
 
 @media (max-width: 759px) {
-  .ugc-scroll-tools { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; }
+  .ugc-scroll-tools { display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-bottom:8px; }
   .ugc-grid, .ugc-grid.has-embeds {
     display:flex;
     align-items:flex-start;
@@ -1254,7 +1253,6 @@ button { font: inherit; }
         <h2 id="worn-title">WORN BY YOU</h2>
       </div>
       <div class="ugc-scroll-tools" id="ugc-scroll-tools" hidden>
-        <p class="ugc-scroll-hint" id="ugc-scroll-hint">横にスワイプ、または矢印で見る →</p>
         <div class="ugc-scroll-buttons">
           <button class="ugc-scroll-button" id="ugc-previous" type="button" aria-label="前の投稿" aria-controls="ugc-grid" disabled>←</button>
           <button class="ugc-scroll-button" id="ugc-next" type="button" aria-label="次の投稿" aria-controls="ugc-grid" disabled>→</button>
@@ -1639,8 +1637,6 @@ function updateUgcControls() {
   const mobile = ugcMobileQuery.matches;
   placeUgcMore();
   ugcGrid.tabIndex = mobile ? 0 : -1;
-  if (mobile) ugcGrid.setAttribute('aria-describedby', 'ugc-scroll-hint');
-  else ugcGrid.removeAttribute('aria-describedby');
   if (ugcScrollTools) ugcScrollTools.hidden = !mobile || ugcShown === 0;
   if (ugcPrevious) ugcPrevious.disabled = ugcGrid.scrollLeft <= 2;
   if (ugcNext) ugcNext.disabled = ugcGrid.scrollLeft >= ugcGrid.scrollWidth - ugcGrid.clientWidth - 2;
