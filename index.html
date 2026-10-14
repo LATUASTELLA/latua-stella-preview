@@ -226,8 +226,12 @@ button { font: inherit; }
   overflow: hidden;
 }
 .collection-list {
-  display:flex;
-  gap: 14px;
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:min(82vw, 360px);
+  grid-template-rows:repeat(6, auto);
+  column-gap:14px;
+  row-gap:0;
   overflow-x:auto;
   overscroll-behavior-inline: contain;
   scroll-snap-type:x mandatory;
@@ -243,10 +247,22 @@ button { font: inherit; }
 .collection-scroll-tools[hidden] { display:none; }
 .product-strip + .collection-scroll-tools { margin:8px 0 0; }
 .collection-item {
-  flex: 0 0 min(82vw, 360px);
+  display:grid;
+  grid-template-columns:minmax(0, 1fr);
+  grid-template-rows:subgrid;
+  grid-row:span 6;
+  row-gap:0;
   min-width: 0;
   scroll-snap-align:start;
   border: 0;
+}
+.collection-header {
+  display:grid;
+  grid-template-columns:minmax(0, 1fr);
+  grid-template-rows:subgrid;
+  grid-row:span 2;
+  row-gap:0;
+  min-width:0;
 }
 .collection-image {
   aspect-ratio: 1/1;
@@ -264,6 +280,12 @@ button { font: inherit; }
 .collection-label > span:first-child { color: var(--muted); font-size: 11px; }
 .collection-label h3 { margin:0; font-size: 20px; line-height:1.3; font-weight:500; }
 .collection-detail {
+  display:grid;
+  grid-template-columns:minmax(0, 1fr);
+  grid-template-rows:subgrid;
+  grid-row:span 4;
+  row-gap:0;
+  min-width:0;
   margin: 8px 0 8px;
   padding: 22px 16px 18px;
   background:#fbf6f5;
@@ -274,6 +296,7 @@ button { font: inherit; }
 .story-copy p:last-child { margin-bottom:0; }
 .product-strip {
   display: flex;
+  min-width:0;
   gap: 12px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -339,7 +362,19 @@ button { font: inherit; }
   background:var(--white);
   border:1px solid var(--line);
 }
-.ugc-embed-viewport { position:relative; width:100%; overflow:hidden; }
+.ugc-media-frame { position:relative; width:100%; aspect-ratio:4/5; background:var(--white); }
+.ugc-embed-viewport {
+  position:absolute;
+  inset:0;
+  width:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior-y:contain;
+  scrollbar-width:thin;
+  scrollbar-gutter:stable;
+}
+.ugc-embed-viewport:focus-visible { outline:2px solid var(--ink); outline-offset:-3px; }
+.ugc-embed-content { position:relative; width:100%; min-height:100%; overflow:hidden; }
 .ugc-embed-stage { position:absolute; top:0; left:0; transform-origin:top left; }
 .ugc-embed-stage .instagram-media {
   width:100% !important;
@@ -349,13 +384,15 @@ button { font: inherit; }
 }
 .ugc-embed-stage blockquote { padding:20px; font-size:14px; }
 .ugc-embed-stage blockquote p { margin:0; }
-.ugc-embed-links { display:grid; gap:6px; padding:14px 16px; font-size:13px; }
+.ugc-embed-footer { min-height:var(--ugc-footer-height, 0px); }
+.ugc-embed-links { display:grid; gap:6px; padding:14px 16px; font-size:13px; overflow-wrap:anywhere; }
 .ugc-embed-links a:hover, .ugc-embed-links a:focus-visible { text-decoration:underline; }
-.ugc-embed-status { margin:0; padding:0 16px 14px; font-size:11px; color:var(--muted); }
+.ugc-embed-status { margin:0; padding:0 16px 14px; font-size:11px; color:var(--muted); overflow-wrap:anywhere; }
 .ugc-embed-status:empty { display:none; }
-.ugc-photo-fallback { display:block; }
+.ugc-embed-status[aria-hidden="true"] { visibility:hidden; }
+.ugc-photo-fallback { position:absolute; inset:0; display:block; }
 .ugc-photo-fallback[hidden] { display:none; }
-.ugc-photo-fallback img { display:block; width:100%; height:auto; max-width:100%; }
+.ugc-photo-fallback img { display:block; width:100%; height:100%; max-width:100%; object-fit:contain; }
 .ugc-scroll-tools { display:none; }
 .ugc-scroll-tools[hidden] { display:none; }
 .ugc-scroll-buttons { display:flex; gap:8px; }
@@ -430,7 +467,7 @@ button { font: inherit; }
     display:flex;
     align-items:center;
     justify-content:center;
-    aspect-ratio:1/1;
+    height:var(--ugc-card-height, auto);
     background:var(--white);
     border:1px solid var(--line);
   }
@@ -450,14 +487,14 @@ button { font: inherit; }
   .about-summary-image img { aspect-ratio: 16/7; }
   .about-body { padding-bottom:44px; }
   .collection-list {
-    gap:20px;
+    column-gap:20px;
+    grid-auto-columns:min(42vw, 420px);
     padding-left:0;
     padding-right:0;
     margin-left:0;
     margin-right:0;
     scroll-padding-inline:0;
   }
-  .collection-item { flex-basis: min(42vw, 420px); }
   .collection-label h3 { font-size:24px; }
   .product-card { flex-basis:70%; }
   .ugc-grid { grid-template-columns:repeat(4,1fr); gap:10px; }
@@ -467,7 +504,7 @@ button { font: inherit; }
 @media (min-width: 1100px) {
   .hero-copy { display:grid; grid-template-columns:1fr auto; align-items:end; column-gap:30px; }
   .hero h1 { margin-bottom:0; }
-  .collection-item { flex-basis: 340px; }
+  .collection-list { grid-auto-columns:340px; }
   .collection-label { grid-template-columns: 28px 1fr; }
   .collection-label h3 { font-size:18px; }
   .ugc-grid { grid-template-columns:repeat(6,1fr); }
@@ -1417,6 +1454,9 @@ function instagramPermalink(url) {
 
 const approvedUgc = ugcData.filter((item) => item.permission === true && (item.embed !== true || instagramPermalink(item.instagramUrl)));
 const instagramCards = [];
+const instagramFits = new WeakMap();
+const ugcFooterObserver = 'ResizeObserver' in window ? new ResizeObserver(scheduleUgcBoxSizes) : null;
+let ugcBoxFrame = 0;
 let ugcShown = 0;
 let ugcStarted = false;
 let instagramScript = null;
@@ -1433,6 +1473,7 @@ function ugcLink(url, label) {
 
 function fitInstagramCard(card) {
   const viewport = card.querySelector('.ugc-embed-viewport');
+  const content = card.querySelector('.ugc-embed-content');
   const stage = card.querySelector('.ugc-embed-stage');
   const fit = () => {
     const available = viewport.clientWidth;
@@ -1443,9 +1484,28 @@ function fitInstagramCard(card) {
     if (stage.style.width !== `${width}px`) stage.style.width = `${width}px`;
     const transform = scale < 1 ? `scale(${scale})` : 'none';
     if (stage.style.transform !== transform) stage.style.transform = transform;
+    // Reserve only the scaled widget's inner height; the outer 4:5 frame stays fixed.
     const height = `${Math.ceil(stage.offsetHeight * scale)}px`;
-    if (viewport.style.height !== height) viewport.style.height = height;
+    if (content.style.height !== height) content.style.height = height;
+    const frame = stage.querySelector('iframe');
+    if (frame && !frame.getAttribute('title')?.trim()) frame.title = `${card.getAttribute('aria-label')} · Instagram投稿`;
+    const ready = Boolean(frame && frame.offsetHeight > 100 && stage.offsetHeight >= frame.offsetHeight);
+    const photo = card.querySelector('.ugc-photo-fallback');
+    const active = document.activeElement;
+    const showingPhoto = Boolean(photo && !ready);
+    if ((ready && photo?.contains(active)) || (showingPhoto && viewport.contains(active))) {
+      card.querySelector('.ugc-embed-links a')?.focus({ preventScroll: true });
+    }
+    if (photo) photo.hidden = ready;
+    // Visibility keeps pending iframe geometry measurable while the cached photo is shown.
+    viewport.style.visibility = showingPhoto ? 'hidden' : 'visible';
+    viewport.setAttribute('aria-hidden', String(showingPhoto));
+    viewport.inert = showingPhoto;
+    const status = card.querySelector('.ugc-embed-status');
+    if (status.textContent) status.setAttribute('aria-hidden', String(ready));
+    scheduleUgcBoxSizes();
   };
+  instagramFits.set(card, fit);
   fit();
   if ('ResizeObserver' in window) {
     const observer = new ResizeObserver(fit);
@@ -1458,16 +1518,6 @@ function fitInstagramCard(card) {
     // Ignore our own sizing writes; still observe iframe height/style updates.
     if (!records.some((record) => record.type === 'childList' || record.target !== stage)) return;
     fit();
-    const frame = stage.querySelector('iframe');
-    if (frame) {
-      if (!frame.getAttribute('title')?.trim()) {
-        frame.title = `${card.getAttribute('aria-label')} · Instagram投稿`;
-      }
-    }
-    const ready = Boolean(frame && frame.offsetHeight > 100 && stage.offsetHeight >= frame.offsetHeight);
-    if (ready) card.querySelector('.ugc-embed-status').textContent = '';
-    const photo = card.querySelector('.ugc-photo-fallback');
-    if (photo) photo.hidden = ready;
   });
   observer.observe(stage, { childList: true, subtree: true, attributes: true, attributeFilter: ['height', 'style'] });
 }
@@ -1480,6 +1530,8 @@ function appendUgcCard(item) {
     card.className = 'ugc-embed';
     if (item.id) card.id = item.id;
     card.setAttribute('aria-label', `${account}のスタイリング`);
+    const media = document.createElement('div');
+    media.className = 'ugc-media-frame';
     if (typeof item.fallbackImage === 'string' && (item.fallbackImage.startsWith('data:image/') || item.fallbackImage.startsWith('assets/'))) {
       const photo = ugcLink(permalink.href, '');
       photo.className = 'ugc-photo-fallback';
@@ -1496,10 +1548,15 @@ function appendUgcCard(item) {
         img.height = item.fallbackHeight;
       }
       photo.appendChild(img);
-      card.appendChild(photo);
+      media.appendChild(photo);
     }
     const viewport = document.createElement('div');
     viewport.className = 'ugc-embed-viewport';
+    viewport.tabIndex = 0;
+    viewport.setAttribute('role', 'region');
+    viewport.setAttribute('aria-label', `${account}のInstagram投稿`);
+    const content = document.createElement('div');
+    content.className = 'ugc-embed-content';
     const stage = document.createElement('div');
     stage.className = 'ugc-embed-stage';
     const quote = document.createElement('blockquote');
@@ -1511,8 +1568,12 @@ function appendUgcCard(item) {
     fallback.appendChild(ugcLink(permalink.href, 'この投稿をInstagramで見る ↗'));
     quote.appendChild(fallback);
     stage.appendChild(quote);
-    viewport.appendChild(stage);
-    card.appendChild(viewport);
+    content.appendChild(stage);
+    viewport.appendChild(content);
+    media.appendChild(viewport);
+    card.appendChild(media);
+    const footer = document.createElement('div');
+    footer.className = 'ugc-embed-footer';
     const links = document.createElement('div');
     links.className = 'ugc-embed-links';
     links.appendChild(ugcLink(permalink.href, `${account} · Instagram ↗`));
@@ -1523,12 +1584,17 @@ function appendUgcCard(item) {
       product.textContent = `着用：${item.product}`;
       links.appendChild(product);
     }
-    card.appendChild(links);
+    footer.appendChild(links);
     const status = document.createElement('p');
     status.className = 'ugc-embed-status';
     status.setAttribute('role', 'status');
-    card.appendChild(status);
+    if (!media.querySelector('.ugc-photo-fallback')) status.textContent = '投稿は上のInstagramリンクからもご確認いただけます。';
+    footer.appendChild(status);
+    card.appendChild(footer);
     ugcGrid.insertBefore(card, ugcMoreCard?.parentElement === ugcGrid ? ugcMoreCard : null);
+    ugcFooterObserver?.observe(media);
+    ugcFooterObserver?.observe(links);
+    ugcFooterObserver?.observe(status);
     fitInstagramCard(card);
     instagramCards.push(card);
     return;
@@ -1562,15 +1628,7 @@ function appendUgcCard(item) {
 }
 
 function unavailableInstagram(cards) {
-  cards.forEach((card) => {
-    const stage = card.querySelector('.ugc-embed-stage');
-    const frame = stage.querySelector('iframe');
-    if (!frame || frame.offsetHeight <= 100 || stage.offsetHeight < frame.offsetHeight) {
-      const photo = card.querySelector('.ugc-photo-fallback');
-      if (photo) photo.hidden = false;
-      card.querySelector('.ugc-embed-status').textContent = photo ? '' : '投稿は上のInstagramリンクからもご確認いただけます。';
-    }
-  });
+  cards.forEach((card) => instagramFits.get(card)?.());
 }
 
 function processInstagram(cards) {
@@ -1601,6 +1659,26 @@ function processInstagram(cards) {
 
 function ugcPostCards() {
   return Array.from(ugcGrid.children).filter((card) => card.matches('.ugc-embed, .ugc-card'));
+}
+
+function updateUgcBoxSizes() {
+  const cards = ugcPostCards().filter((card) => card.matches('.ugc-embed'));
+  if (!cards.length) return;
+  // Measure natural children, not the already equalized footer, so text can grow or shrink.
+  const height = `${Math.ceil(Math.max(...cards.map((card) =>
+    Array.from(card.querySelector('.ugc-embed-footer').children).reduce((sum, child) => sum + child.getBoundingClientRect().height, 0)
+  )))}px`;
+  if (ugcGrid.style.getPropertyValue('--ugc-footer-height') !== height) ugcGrid.style.setProperty('--ugc-footer-height', height);
+  const cardHeight = `${cards[0].getBoundingClientRect().height}px`;
+  if (ugcGrid.style.getPropertyValue('--ugc-card-height') !== cardHeight) ugcGrid.style.setProperty('--ugc-card-height', cardHeight);
+}
+
+function scheduleUgcBoxSizes() {
+  if (ugcBoxFrame) return;
+  ugcBoxFrame = window.requestAnimationFrame(() => {
+    ugcBoxFrame = 0;
+    updateUgcBoxSizes();
+  });
 }
 
 function placeUgcMore() {
@@ -1655,6 +1733,7 @@ function showUgcBatch(event) {
   const batch = approvedUgc.slice(ugcShown, ugcShown + 6);
   batch.forEach(appendUgcCard);
   ugcShown += batch.length;
+  updateUgcBoxSizes();
   if (ugcCount) ugcCount.textContent = `${ugcShown} / ${approvedUgc.length}件`;
   const newCard = ugcPostCards()[firstNewCard];
   if (ugcMore) {
@@ -1689,6 +1768,9 @@ if (ugcGrid) {
     }
   });
   window.addEventListener('resize', updateUgcControls, { passive: true });
+  window.addEventListener('resize', scheduleUgcBoxSizes, { passive: true });
+  document.fonts?.ready.then(scheduleUgcBoxSizes);
+  document.fonts?.addEventListener('loadingdone', scheduleUgcBoxSizes);
   ugcMobileQuery.addEventListener('change', updateUgcControls);
   updateUgcControls();
   const startUgc = () => {
