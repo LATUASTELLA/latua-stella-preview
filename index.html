@@ -248,27 +248,21 @@ button { font: inherit; }
   scroll-snap-align:start;
   border: 0;
 }
-.collection-item summary { list-style: none; cursor:pointer; }
-.collection-item summary::-webkit-details-marker { display:none; }
 .collection-image {
   aspect-ratio: 1/1;
   overflow:hidden;
   background: var(--pink);
 }
-.collection-image img { width:100%; height:100%; object-fit:cover; transition: transform .45s ease; }
-.collection-item summary:hover .collection-image img { transform:scale(1.02); }
+.collection-image img { width:100%; height:100%; object-fit:cover; }
 .collection-label {
   display:grid;
-  grid-template-columns: 30px 1fr auto;
+  grid-template-columns: 30px 1fr;
   align-items:baseline;
   gap: 8px;
   padding: 14px 2px 6px;
 }
 .collection-label > span:first-child { color: var(--muted); font-size: 11px; }
 .collection-label h3 { margin:0; font-size: 20px; line-height:1.3; font-weight:500; }
-.open-label { font-size:10px; letter-spacing:.12em; color: var(--muted); }
-.collection-item[open] .open-label::after { content:"  −"; }
-.collection-item:not([open]) .open-label::after { content:"  +"; }
 .collection-detail {
   margin: 8px 0 8px;
   padding: 22px 16px 18px;
@@ -474,7 +468,7 @@ button { font: inherit; }
   .hero-copy { display:grid; grid-template-columns:1fr auto; align-items:end; column-gap:30px; }
   .hero h1 { margin-bottom:0; }
   .collection-item { flex-basis: 340px; }
-  .collection-label { grid-template-columns: 28px 1fr auto; }
+  .collection-label { grid-template-columns: 28px 1fr; }
   .collection-label h3 { font-size:18px; }
   .ugc-grid { grid-template-columns:repeat(6,1fr); }
 }
@@ -483,7 +477,6 @@ button { font: inherit; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
   .js .reveal { opacity: 1; transform: none; }
-  .collection-item summary:hover .collection-image img { transform: none; }
 }
 
 </style>
@@ -577,11 +570,11 @@ button { font: inherit; }
         <button class="collection-scroll-button" type="button" data-scroll-direction="next" aria-label="次のCOLLECTIONシリーズを見る" aria-controls="collection-list" disabled>→</button>
       </div>
       <div class="collection-list" id="collection-list" role="region" aria-label="COLLECTIONシリーズ一覧" tabindex="0">
-        <details class="collection-item reveal">
-          <summary>
+        <article class="collection-item reveal">
+          <header class="collection-header">
             <div class="collection-image"><img src="assets/3ab7d9c9fc1da9a3da11-480w.webp" alt="Daisy flakeのゴールドとシルバーのリング" loading="lazy" data-local-src="collection-daisy-series.webp" srcset="assets/00cb433b92c083e53cfc-340w.webp 340w, assets/3ab7d9c9fc1da9a3da11-480w.webp 480w, assets/c77b103c4c9fb7dac87e-720w.webp 720w, assets/bd6fd2a15f6d1d6a0dd1-960w.webp 960w" sizes="(min-width: 1100px) 340px, (min-width: 760px) min(42vw, 420px), min(82vw, 360px)" width="960" height="960" decoding="async" /></div>
-            <div class="collection-label"><span>01</span><h3>Daisy series</h3><span class="open-label">VIEW</span></div>
-          </summary>
+            <div class="collection-label"><span>01</span><h3>Daisy series</h3></div>
+          </header>
           <div class="collection-detail">
             <p class="story-label">STORY</p>
             <div class="story-copy">
@@ -643,13 +636,13 @@ button { font: inherit; }
               <button class="collection-scroll-button" type="button" data-scroll-direction="next" aria-label="Daisy seriesの次の商品を見る" aria-controls="collection-products-01" disabled>→</button>
             </div>
           </div>
-        </details>
+        </article>
 
-        <details class="collection-item reveal">
-          <summary>
+        <article class="collection-item reveal">
+          <header class="collection-header">
             <div class="collection-image"><img src="assets/c89c1231f0640804f95a-480w.webp" alt="パールが連なるMellowネックレス" loading="lazy" data-local-src="collection-mellow-series.webp" srcset="assets/395b7e709c8c89bba482-340w.webp 340w, assets/c89c1231f0640804f95a-480w.webp 480w, assets/738936b06604d3fa05f6-720w.webp 720w, assets/794ac9b7553407a3141b-960w.webp 960w" sizes="(min-width: 1100px) 340px, (min-width: 760px) min(42vw, 420px), min(82vw, 360px)" width="960" height="960" decoding="async" /></div>
-            <div class="collection-label"><span>02</span><h3>Mellow series</h3><span class="open-label">VIEW</span></div>
-          </summary>
+            <div class="collection-label"><span>02</span><h3>Mellow series</h3></div>
+          </header>
           <div class="collection-detail">
             <p class="story-label">STORY</p>
             <div class="story-copy">
@@ -686,13 +679,13 @@ button { font: inherit; }
               <button class="collection-scroll-button" type="button" data-scroll-direction="next" aria-label="Mellow seriesの次の商品を見る" aria-controls="collection-products-02" disabled>→</button>
             </div>
           </div>
-        </details>
+        </article>
 
-        <details class="collection-item reveal">
-          <summary>
+        <article class="collection-item reveal">
+          <header class="collection-header">
             <div class="collection-image"><img src="assets/f90c1cffb84093c8cc84-480w.webp" alt="UTOPIAのアクセサリーを身につけたスタイリング" loading="lazy" data-local-src="collection-utopia-series.webp" srcset="assets/c7d2d84d1b68c5e7388f-340w.webp 340w, assets/f90c1cffb84093c8cc84-480w.webp 480w, assets/4dfdfd659d44615ff66d-720w.webp 720w, assets/46f41044e05e830334fd-960w.webp 960w" sizes="(min-width: 1100px) 340px, (min-width: 760px) min(42vw, 420px), min(82vw, 360px)" width="960" height="960" decoding="async" /></div>
-            <div class="collection-label"><span>03</span><h3>UTOPIA series</h3><span class="open-label">VIEW</span></div>
-          </summary>
+            <div class="collection-label"><span>03</span><h3>UTOPIA series</h3></div>
+          </header>
           <div class="collection-detail">
             <p class="story-label">STORY</p>
             <div class="story-copy">
@@ -725,13 +718,13 @@ button { font: inherit; }
               <button class="collection-scroll-button" type="button" data-scroll-direction="next" aria-label="UTOPIA seriesの次の商品を見る" aria-controls="collection-products-03" disabled>→</button>
             </div>
           </div>
-        </details>
+        </article>
 
-        <details class="collection-item reveal">
-          <summary>
+        <article class="collection-item reveal">
+          <header class="collection-header">
             <div class="collection-image"><img src="assets/54020a7e6990c052b512-300w.webp" alt="Ruban シリーズ" loading="lazy" data-local-src="collection-ruban.png" srcset="assets/54020a7e6990c052b512-300w.webp 300w" sizes="(min-width: 1100px) 340px, (min-width: 760px) min(42vw, 420px), min(82vw, 360px)" width="300" height="300" decoding="async" /></div>
-            <div class="collection-label"><span>04</span><h3>Ruban series</h3><span class="open-label">VIEW</span></div>
-          </summary>
+            <div class="collection-label"><span>04</span><h3>Ruban series</h3></div>
+          </header>
           <div class="collection-detail">
             <p class="story-label">STORY</p>
             <div class="story-copy">
@@ -848,13 +841,13 @@ button { font: inherit; }
               <button class="collection-scroll-button" type="button" data-scroll-direction="next" aria-label="Ruban seriesの次の商品を見る" aria-controls="collection-products-04" disabled>→</button>
             </div>
           </div>
-        </details>
+        </article>
 
-        <details class="collection-item reveal">
-          <summary>
+        <article class="collection-item reveal">
+          <header class="collection-header">
             <div class="collection-image"><img src="assets/4e1d2ea361ed9810cd7f-300w.webp" alt="STELLA シリーズ" loading="lazy" data-local-src="collection-stella.png" srcset="assets/4e1d2ea361ed9810cd7f-300w.webp 300w" sizes="(min-width: 1100px) 340px, (min-width: 760px) min(42vw, 420px), min(82vw, 360px)" width="300" height="300" decoding="async" /></div>
-            <div class="collection-label"><span>05</span><h3>Stella series</h3><span class="open-label">VIEW</span></div>
-          </summary>
+            <div class="collection-label"><span>05</span><h3>Stella series</h3></div>
+          </header>
           <div class="collection-detail">
             <p class="story-label">STORY</p>
             <div class="story-copy">
@@ -992,13 +985,13 @@ button { font: inherit; }
               <button class="collection-scroll-button" type="button" data-scroll-direction="next" aria-label="Stella seriesの次の商品を見る" aria-controls="collection-products-05" disabled>→</button>
             </div>
           </div>
-        </details>
+        </article>
 
-        <details class="collection-item reveal">
-          <summary>
+        <article class="collection-item reveal">
+          <header class="collection-header">
             <div class="collection-image"><img src="assets/0cdaf7bb39c14461b120-480w.webp" alt="Flower＆butterflyのアクセサリーを身につけたスタイリング" loading="lazy" data-local-src="collection-flower-series.webp" srcset="assets/8bd3aab902ce2de39978-340w.webp 340w, assets/0cdaf7bb39c14461b120-480w.webp 480w, assets/3f56ab84adb69def8dd4-720w.webp 720w, assets/0c94fbf072f10da1571f-960w.webp 960w" sizes="(min-width: 1100px) 340px, (min-width: 760px) min(42vw, 420px), min(82vw, 360px)" width="960" height="960" decoding="async" /></div>
-            <div class="collection-label"><span>06</span><h3>Flower＆butterfly series</h3><span class="open-label">VIEW</span></div>
-          </summary>
+            <div class="collection-label"><span>06</span><h3>Flower＆butterfly series</h3></div>
+          </header>
           <div class="collection-detail">
             <p class="story-label">STORY</p>
             <div class="story-copy">
@@ -1244,7 +1237,7 @@ button { font: inherit; }
               <button class="collection-scroll-button" type="button" data-scroll-direction="next" aria-label="Flower＆butterfly seriesの次の商品を見る" aria-controls="collection-products-06" disabled>→</button>
             </div>
           </div>
-        </details>
+        </article>
       </div>
     </section>
 
@@ -1344,16 +1337,15 @@ function setupCollectionScroll(rail) {
   if (!controls) return;
   const previous = controls.querySelector('[data-scroll-direction="previous"]');
   const next = controls.querySelector('[data-scroll-direction="next"]');
-  const details = rail.closest('details');
   let updateFrame = 0;
 
   const update = () => {
     updateFrame = 0;
-    const visible = (!details || details.open) && rail.clientWidth > 0;
+    const visible = rail.clientWidth > 0;
     const maximum = Math.max(0, rail.scrollWidth - rail.clientWidth);
     const overflow = visible && maximum > 2;
     if (!overflow && controls.contains(document.activeElement)) {
-      (visible ? rail : details?.querySelector('summary'))?.focus({ preventScroll:true });
+      rail.focus({ preventScroll:true });
     }
     controls.hidden = !overflow;
     previous.disabled = !overflow || rail.scrollLeft <= 2;
@@ -1391,7 +1383,6 @@ function setupCollectionScroll(rail) {
       });
     }
   });
-  details?.addEventListener('toggle', scheduleUpdate);
   rail.querySelectorAll('img').forEach((img) => img.addEventListener('load', scheduleUpdate));
   window.addEventListener('resize', scheduleUpdate, { passive:true });
   if ('ResizeObserver' in window) {
